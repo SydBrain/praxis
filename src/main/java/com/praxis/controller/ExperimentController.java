@@ -1,6 +1,6 @@
 package com.praxis.controller;
 
-import com.praxis.model.Experiment;
+import com.praxis.DTO.ExperimentDTO;
 import com.praxis.service.ExperimentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class ExperimentController {
     }
 
     @GetMapping
-    public List<Experiment> getAllExperiments() {
+    public List<ExperimentDTO> getAllExperiments() {
         return experimentService.findAll();
     }
 }
