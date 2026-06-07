@@ -1,0 +1,62 @@
+.card {
+    border: 3px solid var(--border);
+    background: var(--bg);
+    padding: 2rem;
+    margin-bottom: 0;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.card:last-child {
+    border-bottom: 3px solid var(--border);
+}
+
+.card:hover {
+    background: var(--accent);
+}
+
+.experimentId {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.card:hover .experimentId {
+    color: var(--text);
+}
+
+.name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+}
+
+.description {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    max-width: 600px;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.card:hover .description {
+    color: var(--text);
+}
+
+.arrow {
+    font-size: 2rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+}
