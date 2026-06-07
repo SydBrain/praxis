@@ -1,6 +1,7 @@
 package com.praxis.service;
 
 import com.praxis.DTO.UserSessionDTO;
+import com.praxis.exception.ResourceNotFoundException;
 import com.praxis.model.Experiment;
 import com.praxis.model.UserSession;
 import com.praxis.repository.ExperimentRepository;
@@ -23,7 +24,7 @@ public class UserSessionService {
 
     public UserSessionDTO createSession(Long experimentId) {
         Experiment experiment = experimentRepository.findById(experimentId)
-                .orElseThrow(() -> new RuntimeException("Experiment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Experiment not found with id: " + experimentId));
 
         UserSession userSession = new UserSession(experiment);
         userSessionRepository.save(userSession);

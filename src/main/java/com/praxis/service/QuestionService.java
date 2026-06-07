@@ -1,6 +1,8 @@
 package com.praxis.service;
 
 import com.praxis.DTO.QuestionDTO;
+import com.praxis.exception.ResourceNotFoundException;
+import com.praxis.repository.ExperimentRepository;
 import com.praxis.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +12,21 @@ import java.util.List;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final ExperimentRepository experimentRepository;
 
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(
+            QuestionRepository questionRepository,
+            ExperimentRepository experimentRepository
+    ) {
         this.questionRepository = questionRepository;
+        this.experimentRepository = experimentRepository;
     }
 
     public List<QuestionDTO> findByExperimentId(Long experimentId) {
-        return this.questionRepository.findByExperimentId(experimentId)
+        experimentRepository.findById(experimentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Experiment not found with id: " + experimentId));
+
+        return questionRepository.findByExperimentId(experimentId)
                 .stream()
                 .map(question -> new QuestionDTO(
                         question.getId(),

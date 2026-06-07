@@ -3,6 +3,7 @@ package com.praxis.service;
 import com.praxis.DTO.AnswerRequest;
 import com.praxis.DTO.SubmitAnswersRequest;
 import com.praxis.DTO.UserAnswerDTO;
+import com.praxis.exception.ResourceNotFoundException;
 import com.praxis.model.Question;
 import com.praxis.model.UserAnswer;
 import com.praxis.model.UserSession;
@@ -37,13 +38,13 @@ public class UserAnswerService {
         List<UserAnswerDTO> result = new ArrayList<>();
 
         UserSession session = userSessionRepository.findById(answers.getSessionId())
-                .orElseThrow(() -> new RuntimeException("Cannot find user session, wrong session Id"));
+                .orElseThrow(() -> new ResourceNotFoundException("Session not found with id: " + answers.getSessionId()));
 
         for (AnswerRequest answer: answers.getUserAnswers()) {
             boolean isCorrect;
 
             Question currentQuestion = questionRepository.findById(answer.getQuestionId())
-                    .orElseThrow(() -> new RuntimeException("Cannot find question by Id"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Session not found with id: " + answer.getQuestionId()));
 
             isCorrect = Objects.equals(answer.getAnswerGiven(), currentQuestion.getCorrectAnswer());
 
