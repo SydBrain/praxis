@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class QuestionDTO {
+public class UserSessionDTO {
     private Long id;
-    private String text;
-    private String intuitiveAnswer;
-    private String correctAnswer;
+    private Long experimentId;
+    private LocalDateTime createdAt;
 }

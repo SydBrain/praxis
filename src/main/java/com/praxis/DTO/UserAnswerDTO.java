@@ -9,9 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class QuestionDTO {
+public class UserAnswerDTO {
     private Long id;
-    private String text;
-    private String intuitiveAnswer;
-    private String correctAnswer;
+    private Long sessionId;
+    private Long questionId;
+    private String answerGiven;
+    private boolean isCorrect;
 }

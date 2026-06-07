@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class QuestionDTO {
-    private Long id;
-    private String text;
-    private String intuitiveAnswer;
-    private String correctAnswer;
+public class SubmitAnswersRequest {
+    private Long sessionId;
+    private List<AnswerRequest> userAnswers;
 }

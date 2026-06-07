@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ExperimentDTO {
     private Long id;
     private String name;
