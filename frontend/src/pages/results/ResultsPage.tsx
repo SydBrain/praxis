@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styles from './results.module.css'
 import { useResult } from '../../hooks/useResult';
 import AnswerDistributionChart from '../../components//DistributionChart/AnswerDistributionChart';
+import { motion } from 'framer-motion'
 
 export default function ResultsPage() {
     const { sessionId } = useParams();
@@ -12,10 +13,15 @@ export default function ResultsPage() {
 
     return (
         <div className={styles.page}>
-            <header className={styles.header}>
+            <motion.header
+                className={styles.header}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 <div>
                     <p className={styles.label}>Session Complete</p>
-                    <h1 className={styles.score}>
+                    <h1 className={`${styles.score} ${sessionResult.score === sessionResult.total ? styles.scoreHigh : sessionResult.score === 0 ? styles.scoreLow : ''}`}>
                         {sessionResult.score}<span className={styles.scoreTotal}>/{sessionResult.total}</span>
                     </h1>
                 </div>
@@ -23,15 +29,41 @@ export default function ResultsPage() {
                     {sessionResult.score === sessionResult.total
                         ? 'Perfect score — System 2 thinking throughout.'
                         : sessionResult.score === 0
-                        ? 'All intuitive answers — typical System 1 response.'
-                        : `${sessionResult.total - sessionResult.score} intuitive answer${sessionResult.total - sessionResult.score > 1 ? 's' : ''} detected.`
+                            ? 'All intuitive answers — typical System 1 response.'
+                            : `${sessionResult.total - sessionResult.score} intuitive answer${sessionResult.total - sessionResult.score > 1 ? 's' : ''} detected.`
                     }
                 </p>
-            </header>
+            </motion.header>
 
-            <div className={styles.questions}>
+            <div className={styles.tickerWrapper}>
+                <div className={styles.tickerTrack}>
+                    {["COGNITIVE BIAS", "SYSTEM 1 RESPONSE", "HEURISTICS", "DECISION MAKING", "BEHAVIORAL DATA", "REFLECTION INDEX"].map((item, i) => (
+                        <span key={i} className={styles.tickerItem}>— {item}</span>
+                    ))}
+                    {["COGNITIVE BIAS", "SYSTEM 1 RESPONSE", "HEURISTICS", "DECISION MAKING", "BEHAVIORAL DATA", "REFLECTION INDEX"].map((item, i) => (
+                        <span key={`b${i}`} className={styles.tickerItem}>— {item}</span>
+                    ))}
+                </div>
+            </div>
+
+            <motion.div
+                className={styles.questions}
+                initial="hidden"
+                animate="visible"
+                variants={{
+                    visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } }
+                }}
+            >
                 {sessionResult.questions.map((q, i) => (
-                    <div key={q.questionId} className={`${styles.questionBlock} ${q.correct ? styles.correct : styles.incorrect}`}>
+                    <motion.div
+                        key={q.questionId}
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                        className={`${styles.questionBlock} ${q.correct ? styles.correct : styles.incorrect}`}
+                    >
                         <div className={styles.questionHeader}>
                             <span className={styles.questionNumber}>Q{i + 1}</span>
                             <span className={styles.verdict}>{q.correct ? 'CORRECT' : 'INCORRECT'}</span>
@@ -55,15 +87,20 @@ export default function ResultsPage() {
                                 userAnswer={q.userAnswer}
                             />
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
 
-            <footer className={styles.footer}>
+            <motion.footer
+                className={styles.footer}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.6 }}
+            >
                 <button className={styles.button} onClick={() => navigate('/')}>
                     ← Back to experiments
                 </button>
-            </footer>
+            </motion.footer>
         </div>
     )
 }

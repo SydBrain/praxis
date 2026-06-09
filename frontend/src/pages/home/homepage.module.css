@@ -47,3 +47,52 @@
     border-bottom: 1px solid var(--border);
 }
 
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.cursor {
+    display: inline-block;
+    width: 4px;
+    height: 0.75em;
+    background: var(--accent);
+    margin-left: 8px;
+    animation: blink 1s step-end infinite;
+}
+
+.tickerWrapper {
+    overflow: hidden;
+    border-bottom: 3px solid var(--border);
+    border-top: 1px solid var(--border);
+    padding: 0.6rem 0;
+    background: var(--accent);
+}
+
+.tickerTrack {
+    display: flex;
+    width: max-content;
+    animation: ticker 12s linear infinite;
+}
+
+.tickerItem {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--border);
+    padding: 0 3rem;
+    white-space: nowrap;
+}
+
+.accentBar {
+    width: 60px;
+    height: 6px;
+    background: var(--accent);
+    margin-bottom: 1rem;
+}

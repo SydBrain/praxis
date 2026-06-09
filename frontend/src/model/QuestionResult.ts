@@ -3,6 +3,6 @@ export interface QuestionResult {
     questionText: string,
     userAnswer: string,
     correctAnswer: string,
-    isCorrect: boolean,
+    correct: boolean,
     answerDistribution: Record<string, number>
 }

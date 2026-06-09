@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserAnswerService {
@@ -46,7 +45,7 @@ public class UserAnswerService {
             Question currentQuestion = questionRepository.findById(answer.getQuestionId())
                     .orElseThrow(() -> new ResourceNotFoundException("Session not found with id: " + answer.getQuestionId()));
 
-            isCorrect = Objects.equals(answer.getAnswerGiven(), currentQuestion.getCorrectAnswer());
+            isCorrect = answer.getAnswerGiven().trim().equals(currentQuestion.getCorrectAnswer().trim());
 
             UserAnswer userAnswer = new UserAnswer();
             userAnswer.setUserSession(session);
