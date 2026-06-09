@@ -1,6 +1,6 @@
 import { Experiment } from '../../model/Experiment'
 import { useNavigate } from 'react-router-dom'
-import styles from './ExperimentCard.module.css'
+import styles from './experimentcard.module.css'
 
 interface Props {
     experiment: Experiment

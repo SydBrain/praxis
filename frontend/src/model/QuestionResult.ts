@@ -4,5 +4,5 @@ export interface QuestionResult {
     userAnswer: string,
     correctAnswer: string,
     isCorrect: boolean,
-    answerDistribution: Map<string, number>
+    answerDistribution: Record<string, number>
 }

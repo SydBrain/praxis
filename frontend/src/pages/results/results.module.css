@@ -1,0 +1,153 @@
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem;
+}
+
+.loading {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    padding: 4rem;
+    color: var(--text-muted);
+}
+
+.header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: end;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 3px solid var(--border);
+    margin-bottom: 3rem;
+}
+
+.label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 12vw, 120px);
+    line-height: 1;
+}
+
+.scoreTotal {
+    color: var(--text-muted);
+}
+
+.scoreLabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    padding-bottom: 0.5rem;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.questionBlock {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.questionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.questionNumber {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+}
+
+.verdict {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+}
+
+.correct .verdict {
+    color: #000000;
+}
+
+.incorrect .verdict {
+    color: var(--danger);
+}
+
+.questionText {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.answers {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.answerRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.answerLabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+.answerValue {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.chart {
+    margin-top: 1.5rem;
+}
+
+.chartLabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.footer {
+    padding-top: 3rem;
+}
+
+.button {
+    background: transparent;
+    border: 3px solid var(--border);
+    padding: 1rem 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.button:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
