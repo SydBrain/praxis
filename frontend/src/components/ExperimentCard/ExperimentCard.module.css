@@ -2,7 +2,7 @@
     border: 3px solid var(--border);
     background: var(--bg);
     padding: 2rem;
-    margin-bottom: 0;
+    margin-bottom: -3px;
     border-bottom: none;
     cursor: pointer;
     transition: background 0.1s ease;
@@ -11,6 +11,10 @@
     align-items: flex-start;
     gap: 2rem;
     width: 100%;
+}
+
+.card:not(:first-child):not(:last-child) {
+    border: none !important; 
 }
 
 .card:last-child {
