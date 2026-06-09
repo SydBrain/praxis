@@ -8,7 +8,7 @@
     transition: background 0.1s ease;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 2rem;
     width: 100%;
 }
