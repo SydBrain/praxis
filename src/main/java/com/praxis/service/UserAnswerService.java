@@ -45,7 +45,8 @@ public class UserAnswerService {
             Question currentQuestion = questionRepository.findById(answer.getQuestionId())
                     .orElseThrow(() -> new ResourceNotFoundException("Session not found with id: " + answer.getQuestionId()));
 
-            isCorrect = answer.getAnswerGiven().trim().equals(currentQuestion.getCorrectAnswer().trim());
+            isCorrect = currentQuestion.getCorrectAnswer() != null &&
+                    answer.getAnswerGiven().trim().equals(currentQuestion.getCorrectAnswer().trim());
 
             UserAnswer userAnswer = new UserAnswer();
             userAnswer.setUserSession(session);

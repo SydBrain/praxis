@@ -2,7 +2,10 @@ package com.praxis;
 
 import com.praxis.model.Experiment;
 import com.praxis.model.Question;
+import com.praxis.model.QuestionOption;
+import com.praxis.model.QuestionType;
 import com.praxis.repository.ExperimentRepository;
+import com.praxis.repository.QuestionOptionRepository;
 import com.praxis.repository.QuestionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,40 +22,50 @@ public class PraxisApplication {
 	}
 
 	@Bean
-    CommandLineRunner initData(ExperimentRepository experimentRepository,
-                               QuestionRepository questionRepository) {
+	CommandLineRunner initData(ExperimentRepository experimentRepository,
+	                           QuestionRepository questionRepository,
+	                           QuestionOptionRepository questionOptionRepository) {
 		return args -> {
-			if (experimentRepository.count() == 0) {
+
+			// CRT
+			if (!experimentRepository.existsByName("Cognitive Reflection Test")) {
 				Experiment crt = new Experiment("Cognitive Reflection Test", "The CRT was designed to assess a specific cognitive ability. It assesses individuals' ability to suppress an intuitive and spontaneous (\"system 1\") wrong answer in favor of a reflective and deliberative (\"system 2\") right answer.");
 				experimentRepository.save(crt);
 
-				Question question1 = new Question(
-						crt,
-						"A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. \"How much does the ball cost?\"",
-						"0.10",
-						"0.05"
-				);
+				questionRepository.save(new Question(crt, "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?", "0.10", "0.05", QuestionType.FREE_TEXT));
+				questionRepository.save(new Question(crt, "If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?", "100", "5", QuestionType.FREE_TEXT));
+				questionRepository.save(new Question(crt, "In a lake, there is a patch of lily pads. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake?", "24", "47", QuestionType.FREE_TEXT));
+			}
 
-				Question question2 = new Question(
-						crt,
-						"If it takes 5 machines 5 minutes to make 5 widgets, how long would it take\n" +
-								"100 machines to make 100 widgets?",
-						"100",
-						"5"
-				);
+			// Asian Disease Problem
+			if (!experimentRepository.existsByName("Asian Disease Problem")) {
+				Experiment adp = new Experiment("Asian Disease Problem", "A classic experiment by Kahneman & Tversky demonstrating the framing effect: identical outcomes described as gains or losses produce systematically different choices.");
+				experimentRepository.save(adp);
 
-				Question question3 = new Question(
-						crt,
-						"In a lake, there is a patch of lily pads. Every day, the patch doubles in size.\n" +
-								"If it takes 48 days for the patch to cover the entire lake, how long would it\n" +
-								"take for the patch to cover half of the lake?",
-						"24",
-						"47"
-				);
+				Question q1 = new Question(adp, "Imagine that the U.S. is preparing for the outbreak of an unusual Asian disease, which is expected to kill 600 people. Two alternative programs to combat the disease have been proposed. If Program A is adopted, 200 people will be saved. If Program B is adopted, there is a 1/3 probability that 600 people will be saved, and 2/3 probability that no people will be saved. Which program do you choose?", null, "A", QuestionType.SINGLE_CHOICE);
+				questionRepository.save(q1);
+				questionOptionRepository.save(new QuestionOption("Program A", q1));
+				questionOptionRepository.save(new QuestionOption("Program B", q1));
 
-				questionRepository.save(question1);
-				questionRepository.save(question2);
-				questionRepository.save(question3);
+				Question q2 = new Question(adp, "If Program C is adopted, 400 people will die. If Program D is adopted, there is a 1/3 probability that nobody will die, and 2/3 probability that 600 people will die. Which program do you choose?", null, "C", QuestionType.SINGLE_CHOICE);
+				questionRepository.save(q2);
+				questionOptionRepository.save(new QuestionOption("Program C", q2));
+				questionOptionRepository.save(new QuestionOption("Program D", q2));
+			}
+
+			// Ultimatum Game
+			if (!experimentRepository.existsByName("Ultimatum Game")) {
+				Experiment ug = new Experiment("Ultimatum Game", "A classic behavioral economics experiment testing fairness and rationality. One player proposes how to split a sum of money; the other accepts or rejects. Rejection means both get nothing.");
+				experimentRepository.save(ug);
+
+				questionRepository.save(new Question(
+						ug,
+						"You have been given $10 to split with another participant. You propose how much to give them. If they reject your offer, both of you receive nothing. How much do you offer?",
+						null,
+						null,
+						QuestionType.SLIDER,
+						0, 10, 1
+				));
 			}
 		};
 	}

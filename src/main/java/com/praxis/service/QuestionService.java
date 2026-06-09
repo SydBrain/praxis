@@ -1,6 +1,7 @@
 package com.praxis.service;
 
 import com.praxis.DTO.QuestionDTO;
+import com.praxis.DTO.QuestionOptionDTO;
 import com.praxis.exception.ResourceNotFoundException;
 import com.praxis.repository.ExperimentRepository;
 import com.praxis.repository.QuestionRepository;
@@ -32,7 +33,14 @@ public class QuestionService {
                         question.getId(),
                         question.getText(),
                         question.getIntuitiveAnswer(),
-                        question.getCorrectAnswer()
+                        question.getCorrectAnswer(),
+                        question.getQuestionType().name(),
+                        question.getOptions().stream()
+                                .map(opt -> new QuestionOptionDTO(opt.getId(), opt.getText()))
+                                .toList(),
+                        question.getSliderMin(),
+                        question.getSliderMax(),
+                        question.getSliderStep()
                 )).toList();
     }
 }
