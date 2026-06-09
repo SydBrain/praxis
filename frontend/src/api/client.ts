@@ -15,3 +15,4 @@ export const getQuestions = (experimentId: number) => api.get<Question[]>(`/expe
 export const createSession = (experimentId: number) => api.post<UserSession>('/sessions', { experimentId })
 export const submitAnswers = (sessionId: number, userAnswers: AnswerRequest[]) => api.post<UserAnswer[]>('/answers', { sessionId, userAnswers })
 export const getResults = (sessionId: number) => api.get<SessionResult>(`/sessions/${sessionId}/results`)
+export const getExperiment = (experimentId: number) => api.get<Experiment>(`/experiments/${experimentId}`)

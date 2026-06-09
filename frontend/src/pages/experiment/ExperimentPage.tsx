@@ -2,12 +2,13 @@ import styles from './experiment.module.css'
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
 import { useExperiment } from '../../hooks/useExperiment';
+import FreeTextInput from '../../components/FreeTextInput/FreeTextInput';
+import SingleChoiceInput from '../../components/SingleChoiceInput/SingleChoiceInput';
+import SliderInput from '../../components/SliderInput/SliderInput';
 
 export default function ExperimentPage() {
-
     const { id } = useParams();
     const experimentId = parseInt(id as string);
-
     const {
         currentQuestion,
         currentInput,
@@ -15,15 +16,27 @@ export default function ExperimentPage() {
         handleNext,
         questions,
         currentQuestionIndex,
-        error
+        error,
+        experimentName
     } = useExperiment(experimentId)
 
     if (!currentQuestion) return <div>Loading...</div>
 
+    const renderInput = () => {
+        switch (currentQuestion.questionType) {
+            case 'FREE_TEXT':
+                return <FreeTextInput value={currentInput} onChange={setCurrentInput} onSubmit={handleNext} />
+            case 'SINGLE_CHOICE':
+                return <SingleChoiceInput options={currentQuestion.options} value={currentInput} onChange={setCurrentInput} />
+            case 'SLIDER':
+                return <SliderInput value={currentInput} onChange={setCurrentInput} min={currentQuestion.sliderMin!} max={currentQuestion.sliderMax!} step={currentQuestion.sliderStep!} />
+        }
+    }
+
     return (
         <div className={styles.page}>
             <div className={styles.header}>
-                <span className={styles.experimentName}>Cognitive Reflection Test</span>
+                <span className={styles.experimentName}>{experimentName}</span>
                 <div className={styles.progressWrapper}>
                     <div className={styles.progressBar}>
                         <div
@@ -34,7 +47,6 @@ export default function ExperimentPage() {
                     <span className={styles.progressText}>{currentQuestionIndex + 1} / {questions.length}</span>
                 </div>
             </div>
-
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentQuestionIndex}
@@ -50,28 +62,20 @@ export default function ExperimentPage() {
                     <p className={styles.questionText}>{currentQuestion.text}</p>
                 </motion.div>
             </AnimatePresence>
-
             <motion.div
                 className={styles.inputArea}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
             >
-                <input
-                    className={styles.input}
-                    type="text"
-                    value={currentInput}
-                    onChange={(e) => setCurrentInput(e.target.value)}
-                    placeholder="Your answer..."
-                    onKeyDown={(e) => e.key === 'Enter' && handleNext()}
-                    autoFocus
-                />
+                {renderInput()}
                 <div className={styles.actions}>
-                    {error
-                        ? <p className={styles.error}>{error}</p>
-                        : <span />
-                    }
-                    <button className={styles.button} onClick={handleNext}>
+                    {error ? <p className={styles.error}>{error}</p> : <span />}
+                    <button
+                        className={styles.button}
+                        onClick={handleNext}
+                        disabled={currentQuestion.questionType === 'SINGLE_CHOICE' && !currentInput}
+                    >
                         {currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next →'}
                     </button>
                 </div>

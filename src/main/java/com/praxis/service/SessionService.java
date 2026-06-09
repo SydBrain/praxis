@@ -51,13 +51,14 @@ public class SessionService {
                             userAnswer.getAnswerGiven(),
                             userAnswer.getQuestion().getCorrectAnswer(),
                             userAnswer.isCorrect(),
-                            distribution
+                            distribution,
+                            userAnswer.getQuestion().getExplanation()
                     );
                 })
                 .toList();
 
         int score = (int) userAnswers.stream().filter(UserAnswer::isCorrect).count();
 
-        return new SessionResultDTO(score, userAnswers.size(), questionResults);
+        return new SessionResultDTO(score, userAnswers.size(), questionResults, userSession.getExperiment().isHasScore());
     }
 }

@@ -193,3 +193,13 @@
     padding: 0 2rem;
     white-space: nowrap;
 }
+
+.explanation {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin-top: 1rem;
+}

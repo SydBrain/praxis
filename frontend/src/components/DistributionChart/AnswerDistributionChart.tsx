@@ -2,7 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 
 interface Props {
     distribution: Record<string, number>
-    correctAnswer: string
+    correctAnswer?: string
     userAnswer: string
 }
 

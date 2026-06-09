@@ -1,0 +1,18 @@
+.input {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid var(--border);
+    padding: 1rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.5rem;
+    color: var(--text);
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+.input::placeholder {
+    color: var(--text-muted);
+}
+.input:focus {
+    border-bottom-color: var(--accent);
+}

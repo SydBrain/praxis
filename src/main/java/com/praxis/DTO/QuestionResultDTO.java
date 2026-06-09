@@ -18,4 +18,5 @@ public class QuestionResultDTO {
     private String correctAnswer;
     boolean isCorrect;
     Map<String, Long> answerDistribution;
+    private String explanation;
 }

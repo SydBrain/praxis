@@ -26,24 +26,33 @@ public class Question {
     private String correctAnswer;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<QuestionOption> options = new ArrayList<>();
     private Integer sliderMin;
     private Integer sliderMax;
     private Integer sliderStep;
+    @Column(columnDefinition = "TEXT")
+    private String explanation;
 
-    public Question(Experiment experiment, String text, String intuitiveAnswer, String correctAnswer, QuestionType questionType) {
+    public Question(Experiment experiment, String text, String intuitiveAnswer, String correctAnswer, QuestionType questionType, String explanation) {
         this.experiment = experiment;
         this.text = text;
         this.intuitiveAnswer = intuitiveAnswer;
         this.correctAnswer = correctAnswer;
         this.questionType = questionType;
+        this.explanation = explanation;
     }
 
-    public Question(Experiment experiment, String text, String intuitiveAnswer, String correctAnswer, QuestionType questionType, Integer sliderMin, Integer sliderMax, Integer sliderStep) {
-        this(experiment, text, intuitiveAnswer, correctAnswer, questionType);
+    public Question(Experiment experiment, String text, String intuitiveAnswer, String correctAnswer, QuestionType questionType, Integer sliderMin, Integer sliderMax, Integer sliderStep, String explanation) {
+        this.experiment = experiment;
+        this.text = text;
+        this.intuitiveAnswer = intuitiveAnswer;
+        this.correctAnswer = correctAnswer;
+        this.questionType = questionType;
         this.sliderMin = sliderMin;
         this.sliderMax = sliderMax;
         this.sliderStep = sliderStep;
+        this.explanation = explanation;
     }
+
 }

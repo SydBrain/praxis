@@ -15,4 +15,5 @@ public class SessionResultDTO {
     private int score;
     private int total;
     private List<QuestionResultDTO> questions;
+    private boolean hasScore;
 }

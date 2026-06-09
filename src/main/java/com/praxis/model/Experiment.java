@@ -19,10 +19,12 @@ public class Experiment {
     private long id;
     private String name;
     private String description;
+    private boolean hasScore;
 
-    public Experiment(String name, String description) {
+    public Experiment(String name, String description, boolean hasScore) {
         this.name = name;
         this.description = description;
+        this.hasScore = hasScore;
     }
 
 }

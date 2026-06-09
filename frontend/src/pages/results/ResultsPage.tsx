@@ -21,18 +21,20 @@ export default function ResultsPage() {
             >
                 <div>
                     <p className={styles.label}>Session Complete</p>
-                    <h1 className={`${styles.score} ${sessionResult.score === sessionResult.total ? styles.scoreHigh : sessionResult.score === 0 ? styles.scoreLow : ''}`}>
-                        {sessionResult.score}<span className={styles.scoreTotal}>/{sessionResult.total}</span>
+                    <h1 className={`${styles.score} ${!sessionResult.hasScore ? '' : sessionResult.score === sessionResult.total ? styles.scoreHigh : sessionResult.score === 0 ? styles.scoreLow : ''}`}>
+                        {sessionResult.hasScore ? sessionResult.score : '—'}<span className={styles.scoreTotal}>/{sessionResult.total}</span>
                     </h1>
                 </div>
-                <p className={styles.scoreLabel}>
-                    {sessionResult.score === sessionResult.total
-                        ? 'Perfect score — System 2 thinking throughout.'
-                        : sessionResult.score === 0
-                            ? 'All intuitive answers — typical System 1 response.'
-                            : `${sessionResult.total - sessionResult.score} intuitive answer${sessionResult.total - sessionResult.score > 1 ? 's' : ''} detected.`
-                    }
-                </p>
+                {sessionResult.hasScore && (
+                    <p className={styles.scoreLabel}>
+                        {sessionResult.score === sessionResult.total
+                            ? 'Perfect score — System 2 thinking throughout.'
+                            : sessionResult.score === 0
+                                ? 'All intuitive answers — typical System 1 response.'
+                                : `${sessionResult.total - sessionResult.score} intuitive answer${sessionResult.total - sessionResult.score > 1 ? 's' : ''} detected.`
+                        }
+                    </p>
+                )}
             </motion.header>
 
             <div className={styles.tickerWrapper}>
@@ -62,11 +64,13 @@ export default function ResultsPage() {
                             visible: { opacity: 1, y: 0 }
                         }}
                         transition={{ duration: 0.4, ease: 'easeOut' }}
-                        className={`${styles.questionBlock} ${q.correct ? styles.correct : styles.incorrect}`}
+                        className={`${styles.questionBlock} ${q.correctAnswer === null ? '' : q.correct ? styles.correct : styles.incorrect}`}
                     >
                         <div className={styles.questionHeader}>
                             <span className={styles.questionNumber}>Q{i + 1}</span>
-                            <span className={styles.verdict}>{q.correct ? 'CORRECT' : 'INCORRECT'}</span>
+                            {q.correctAnswer !== null && (
+                                <span className={styles.verdict}>{q.correct ? 'CORRECT' : 'INCORRECT'}</span>
+                            )}
                         </div>
                         <p className={styles.questionText}>{q.questionText}</p>
                         <div className={styles.answers}>
@@ -74,16 +78,21 @@ export default function ResultsPage() {
                                 <span className={styles.answerLabel}>YOUR ANSWER</span>
                                 <span className={styles.answerValue}>{q.userAnswer}</span>
                             </div>
-                            <div className={styles.answerRow}>
-                                <span className={styles.answerLabel}>CORRECT</span>
-                                <span className={styles.answerValue}>{q.correctAnswer}</span>
-                            </div>
+                            {q.correctAnswer !== null && (
+                                <div className={styles.answerRow}>
+                                    <span className={styles.answerLabel}>CORRECT</span>
+                                    <span className={styles.answerValue}>{q.correctAnswer}</span>
+                                </div>
+                            )}
                         </div>
+                        {q.explanation && (
+                            <p className={styles.explanation}>{q.explanation}</p>
+                        )}
                         <div className={styles.chart}>
                             <p className={styles.chartLabel}>ANSWER DISTRIBUTION — ALL PARTICIPANTS</p>
                             <AnswerDistributionChart
                                 distribution={q.answerDistribution}
-                                correctAnswer={q.correctAnswer}
+                                correctAnswer={q.correctAnswer ?? undefined}
                                 userAnswer={q.userAnswer}
                             />
                         </div>

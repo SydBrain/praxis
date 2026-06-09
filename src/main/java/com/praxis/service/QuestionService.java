@@ -40,7 +40,8 @@ public class QuestionService {
                                 .toList(),
                         question.getSliderMin(),
                         question.getSliderMax(),
-                        question.getSliderStep()
+                        question.getSliderStep(),
+                        question.getExplanation()
                 )).toList();
     }
 }

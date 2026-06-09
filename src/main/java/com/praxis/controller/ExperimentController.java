@@ -27,6 +27,11 @@ public class ExperimentController {
         this.questionService = questionService;
     }
 
+    @GetMapping("/{experimentId}")
+    public ExperimentDTO getExperimentById(@PathVariable Long experimentId) {
+        return experimentService.findById(experimentId);
+    }
+
     @GetMapping
     public List<ExperimentDTO> getAllExperiments() {
         return experimentService.findAll();

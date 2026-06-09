@@ -21,4 +21,5 @@ public class QuestionDTO {
     private Integer sliderMin;
     private Integer sliderMax;
     private Integer sliderStep;
+    private String explanation;
 }

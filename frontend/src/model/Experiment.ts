@@ -1,5 +1,6 @@
 export interface Experiment {
-    id: number,
-    name: string,
+    id: number
+    name: string
     description: string
+    hasScore: boolean
 }

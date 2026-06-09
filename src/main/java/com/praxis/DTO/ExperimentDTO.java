@@ -13,4 +13,5 @@ public class ExperimentDTO {
     private Long id;
     private String name;
     private String description;
+    private boolean hasScore;
 }
